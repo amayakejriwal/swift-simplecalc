@@ -1,11 +1,61 @@
 print("Welcome to the UW Calculator Playground")
 
 func calculate(_ args: [String]) -> Int {
-    return -1
+    // Counting
+    if args[args.count - 1] == "count" {
+        return args.count - 1
+    }
+    
+    // Avg
+    if args[args.count - 1] == "avg" && args.count > 1 {
+        var sum = 0
+        for num in args {
+            sum += Int(num) ?? 0
+        }
+        return sum / (args.count - 1)
+    } else if args[args.count - 1] == "avg" {
+        return 0
+    }
+    
+    // Factorial
+    if args[args.count - 1] == "fact" && args.count > 1 {
+        if Int(args[0])! == 0 {
+            return 1
+        } else {
+            var factorial = 1
+            for num in 1...Int(args[0])! {
+                factorial *= num
+            }
+            return factorial
+        }
+    } else if args[args.count - 1] == "fact" {
+        return 0
+    }
+    
+    // Evaluating an expression: Ex. 2 + 2
+    let operand = args[1]
+    switch operand {
+    case "+":
+        return Int(args[0])! + Int(args[2])!
+    case "-":
+        return Int(args[0])! - Int(args[2])!
+    case "*":
+        return Int(args[0])! * Int(args[2])!
+    case "/":
+        return Int(args[0])! / Int(args[2])!
+    case "%":
+        return Int(args[0])! % Int(args[2])!
+    default:
+        return -1
+    }
 }
 
 func calculate(_ arg: String) -> Int {
-    return -1
+    // what we have: "2 + 2"
+    // what we want: "["2", "+", "2"]
+    let values = arg.split(separator: " ").map(String.init)
+    return calculate(values)
+    
 }
 
 // -------------------------------------------
@@ -53,7 +103,7 @@ calculate("5 fact") == 120
 
 // Implement calculate([String]) and calculate(String)
 // to handle negative numbers
-/*
+
 calculate(["2", "+", "-2"]) == 0
 calculate(["2", "-", "-2"]) == 4
 calculate(["2", "*", "-2"]) == -4
@@ -68,7 +118,7 @@ calculate("2 - -2") == 4
 calculate("-2 / 2") == -1
 
 calculate("1 -2 3 -4 5 count") == 5
-*/
+
  
 // Implement calculate([String]) and calculate(String)
 // to use floating-point values
